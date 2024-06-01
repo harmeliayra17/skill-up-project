@@ -14,24 +14,23 @@ import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import skill.up.project.controllers.WebinarController;
 import skill.up.project.models.Webinar;
 import skill.up.project.utils.UIUtil;
 
 import java.io.File;
-import java.net.URI;
 
-public class DetailWebinarScene {
+public class UpdateWebinar {
     private Stage stage;
     private Webinar webinar;
 
-    public DetailWebinarScene(Stage stage, Webinar webinar) {
+    public UpdateWebinar(Stage stage, Webinar webinar) {
         this.stage = stage;
         this.webinar = webinar;
     }
-
     public void show(int id) {
         Pane root = new Pane();
-        root.getStyleClass().add("root2");
+        root.getStyleClass().add("root3");
 
         Region rectangleHome = UIUtil.createRoundedRectangle(698, 412, 21, 55);
         rectangleHome.getStyleClass().add("rounded-rectangle");
@@ -41,15 +40,20 @@ public class DetailWebinarScene {
         imageViewSmallLogo.getStyleClass().add("image-skillup");
 
         Label labelTitleName = UIUtil.createLabel("SkillUp", 664, 18);
-        labelTitleName.getStyleClass().add("label-title-home");
+        labelTitleName.getStyleClass().add("label-title-admin");
 
-        Label labelTitle = UIUtil.createLabel("Detail Webinar", 66, 13);
-        labelTitle.getStyleClass().add("label-title-desc");
+        Label labelTitle = UIUtil.createLabel("Edit Event", 66, 18);
+        labelTitle.getStyleClass().add("label-title-admin");
 
-        TextField textFieldWebinarName = new TextField(webinar.getName());
-        textFieldWebinarName.setLayoutX(51);
-        textFieldWebinarName.setLayoutY(75);
-        textFieldWebinarName.setStyle("-fx-font-family: 'Poppins'; -fx-text-fill: yellow;");
+        TextField textFieldWebinarName = UIUtil.createTextField(webinar.getName(), 41, 65);
+        textFieldWebinarName.setPrefWidth(471);
+        textFieldWebinarName.getStyleClass().add("label-name-desc");
+
+        TextField textFieldLink = UIUtil.createTextField(webinar.getLink(), 326, 353);
+        textFieldLink.setPrefWidth(368);
+        textFieldLink.getStyleClass().add("text-field-update");
+
+        Button buttonDelete = UIUtil.createButtonWithImage("/images/Delete.png", 573, 58, 120, 40);
 
         Button buttonBack = UIUtil.createButtonWithImage("/images/Singn_out.png", 10, 5, 35, 35);
         buttonBack.setOnAction(e -> {
@@ -61,7 +65,7 @@ public class DetailWebinarScene {
         imageViewDesc.setFitWidth(269);
         imageViewDesc.setFitHeight(335);
         imageViewDesc.setLayoutX(41);
-        imageViewDesc.setLayoutY(111);
+        imageViewDesc.setLayoutY(113);
         imageViewDesc.getStyleClass().add("image-skillup");
 
         if (webinar.getImagePath() != null && !webinar.getImagePath().isEmpty()) {
@@ -77,10 +81,8 @@ public class DetailWebinarScene {
             }
         }
 
-        Button buttonChangeImage = new Button("Change Image");
-        buttonChangeImage.setLayoutX(41);
-        buttonChangeImage.setLayoutY(460);
-        buttonChangeImage.getStyleClass().add("button-change-image");
+        Button buttonChangeImage = UIUtil.createButton("Ubah Gambar", 385, 404);
+        buttonChangeImage.getStyleClass().add("button-register-desc");
 
         buttonChangeImage.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser();
@@ -101,19 +103,20 @@ public class DetailWebinarScene {
 
         TextArea textAreaWebinarDesc = new TextArea(webinar.getDescription());
         textAreaWebinarDesc.setPrefWidth(368);
+        textAreaWebinarDesc.setPrefHeight(215);
         textAreaWebinarDesc.setWrapText(true);
         textAreaWebinarDesc.getStyleClass().add("label-desc");
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(textAreaWebinarDesc);
         scrollPane.setFitToWidth(true);
-        scrollPane.setPrefSize(368, 265);
-        scrollPane.setLayoutX(323);
+        scrollPane.setPrefSize(368, 215);
+        scrollPane.setLayoutX(326);
         scrollPane.setLayoutY(113);
         scrollPane.setPadding(new Insets(2));
         scrollPane.getStyleClass().add("scroll-pane-desc");
 
-        Button buttonUpdate = UIUtil.createButton("UPDATE", 455, 410);
+        Button buttonUpdate = UIUtil.createButton("Perbarui", 532, 404);
         buttonUpdate.getStyleClass().add("button-register-desc");
 
         buttonUpdate.setOnAction(e -> {
@@ -124,25 +127,21 @@ public class DetailWebinarScene {
                 webinar.setName(updatedName);
                 webinar.setDescription(updatedDescription);
 
-                updateWebinarInDatabase(webinar);
-
-                HomeAdminScene homeAdminScene = new HomeAdminScene(stage);
-                homeAdminScene.show(id);
-
+                if (WebinarController.updateWebinar(webinar.getId(), updatedName, webinar.getImagePath(), webinar.getLink(), updatedDescription)) {
+                    HomeAdminScene homeAdminScene = new HomeAdminScene(stage);
+                    homeAdminScene.show(id);
+                } else {
+                    System.out.println("Failed to update webinar in the database.");
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         });
 
-        root.getChildren().addAll(imageViewSmallLogo, labelTitleName, buttonBack, labelTitle, textFieldWebinarName, imageViewDesc, scrollPane, buttonUpdate, buttonChangeImage);
+        root.getChildren().addAll(imageViewSmallLogo, labelTitleName, buttonBack, labelTitle, textFieldLink, textFieldWebinarName, imageViewDesc, scrollPane, buttonUpdate, buttonDelete, buttonChangeImage);
 
         Scene scene = new Scene(root, 740, 480);
         scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm());
         stage.setScene(scene);
-    }
-
-    private void updateWebinarInDatabase(Webinar webinar) {
-        // Implement the logic to update the webinar in your database
-        // This might involve calling a method from your database access layer
     }
 }

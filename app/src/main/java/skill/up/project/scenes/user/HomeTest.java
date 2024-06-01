@@ -24,6 +24,7 @@ import skill.up.project.controllers.ArticleController;
 import skill.up.project.controllers.UserController;
 import skill.up.project.models.Article;
 import skill.up.project.models.User;
+import skill.up.project.scenes.mbti.MbtiTest1Scene;
 import skill.up.project.utils.UIUtil;
 import java.io.File;
 import java.awt.Desktop;
@@ -66,8 +67,10 @@ public class HomeTest {
 
         Button buttonTest = UIUtil.createButton("Mulai Tes >", 522, 162);
         buttonTest.getStyleClass().add("button-test");
-        buttonTest.setOnAction(e -> {
-            
+
+        buttonTest.setOnAction( e-> {
+            MbtiTest1Scene mbtiTest1Scene = new MbtiTest1Scene(stage);
+            mbtiTest1Scene.show(id);
         });
 
         Label labelCareer = UIUtil.createLabel("Artikel Seputar Karir", 123, 228);

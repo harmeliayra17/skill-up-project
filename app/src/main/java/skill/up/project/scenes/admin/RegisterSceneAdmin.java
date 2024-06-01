@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import skill.up.project.controllers.AdminController;
+import skill.up.project.scenes.user.WebinarScene;
 import skill.up.project.utils.UIUtil;
 
 public class RegisterSceneAdmin {
@@ -22,8 +23,8 @@ public class RegisterSceneAdmin {
         Pane root = new Pane();
         root.getStyleClass().add("root1");
 
-        /* ==> INSTANCE LAYOUT START <== */
-        Label labelTitle = UIUtil.createLabel("Register", 497, 38);
+        // Instance layout start
+        Label labelTitle = UIUtil.createLabel("Register", 487, 38);
         labelTitle.getStyleClass().add("label-title-login");
 
         Label labelHello = UIUtil.createLabel("Create your account", 465, 93);
@@ -50,18 +51,22 @@ public class RegisterSceneAdmin {
         Button buttonRegister = UIUtil.createButton("Register", 380, 400);
         buttonRegister.getStyleClass().add("button-login");
 
+        Button buttonBack = UIUtil.createButtonWithImage("/images/Singn_out.png", 10, 5, 35, 35);
+        buttonBack.setOnAction(e -> {
+            LoginSceneAdmin loginSceneAdmin = new LoginSceneAdmin(stage);
+            loginSceneAdmin.show();
+        });
+
         Label labelStatus = UIUtil.createLabel("", 452, 353);
         labelStatus.getStyleClass().add("label-status");
 
         ImageView imageViewSkillup = UIUtil.createImageView("/images/login_photos.png", 300, 405, 39, 37);
         imageViewSkillup.getStyleClass().add("image-skillup");
 
-        // Tambahkan semua elemen ke root
+        // Add all elements to root
         root.getChildren().addAll(labelTitle, labelHello, labelName, textFieldName, labelEmail, textFieldEmail, labelPassword, passwordField, buttonRegister, labelStatus, imageViewSkillup);
 
-        /* ==> INSTANCE LAYOUT END <== */
-
-        /* ==> BUTTON ACTION START <== */
+        // Button action start
         buttonRegister.setOnAction(e -> {
             String name = textFieldName.getText();
             String email = textFieldEmail.getText();
@@ -71,14 +76,18 @@ public class RegisterSceneAdmin {
                 return;
             }
 
-            boolean registered = AdminController.register(name, email, password);
-            if (registered) {
-                labelStatus.setText("Registrasi berhasil!");
+            if (AdminController.isUserExists(email)) {
+                labelStatus.setText("Email sudah terdaftar, silahkan login!");
             } else {
-                labelStatus.setText("Registrasi gagal, coba lagi!");
+                boolean registered = AdminController.register(name, email, password);
+                if (registered) {
+                    labelStatus.setText("Registrasi berhasil!");
+                } else {
+                    labelStatus.setText("Registrasi gagal, coba lagi!");
+                }
             }
         });
-        /* ==> BUTTON ACTION END <== */
+        // Button action end
 
         Scene scene = new Scene(root, 740, 480);
         scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm());

@@ -42,19 +42,21 @@ public class DetailWebinarScene {
         labelTitleName.getStyleClass().add("label-title-home");
         
         Label labelTitle = UIUtil.createLabel("Detail Webinar", 66, 13);
-        labelTitle.getStyleClass().add("label-title-desc");
+        labelTitle.getStyleClass().add("label-title-home");
         
         // Region rectangleHome = UIUtil.createRoundedRectangle(698, 412, 21, 55);
         // rectangleHome.getStyleClass().add("rounded-rectangle");
         
-        Label labelWebinarName = UIUtil.createLabel(webinar.getName(), 51, 75);
-        labelWebinarName.setStyle("-fx-font-family: 'Poppins'; -fx-text-fill: yellow;");
+        Label labelWebinarName = UIUtil.createLabel(webinar.getName(), 41, 75);
+        labelWebinarName.getStyleClass().add("label-title-event");
         
         Button buttonBack = UIUtil.createButtonWithImage("/images/Singn_out.png", 10, 5, 35, 35);
         buttonBack.setOnAction(e -> {
             WebinarScene webinarScene = new WebinarScene(stage);
             webinarScene.show(id);
         });
+
+        //TODO button profile, tambahkan atau tidak?
 
         ImageView imageViewDesc = new ImageView();
         imageViewDesc.setFitWidth(269);

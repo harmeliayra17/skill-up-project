@@ -24,7 +24,7 @@ public class LoginSceneAdmin {
         Pane root = new Pane();
         root.getStyleClass().add("root1");
 
-        /* ==> INSTANCE LAYOUT START <== */
+        // Instance layout start
         Label labelTitle = UIUtil.createLabel("Login", 497, 38);
         labelTitle.getStyleClass().add("label-title-login");
 
@@ -45,9 +45,9 @@ public class LoginSceneAdmin {
 
         Button buttonLogin = UIUtil.createButton("Login", 380, 400);
         buttonLogin.getStyleClass().add("button-login");
-        
+
         Button buttonRegister = UIUtil.createButton("Register", 556, 400);
-        buttonRegister.getStyleClass().add("button-register");        
+        buttonRegister.getStyleClass().add("button-register");
 
         Label labelStatus = UIUtil.createLabel("", 452, 353);
         labelStatus.getStyleClass().add("label-status");
@@ -55,18 +55,16 @@ public class LoginSceneAdmin {
         ImageView imageViewSkillup = UIUtil.createImageView("/images/login_photos.png", 300, 405, 39, 37);
         imageViewSkillup.getStyleClass().add("image-skillup");
 
-        // Tambahkan buttonLogin, buttonRegister, dan labelStatus ke dalam buttonBox
+        // Add buttonLogin, buttonRegister, and labelStatus to buttonBox
         HBox buttonBox = new HBox(34); // Jarak antar tombol 
         buttonBox.getChildren().addAll(buttonLogin, buttonRegister);
         buttonBox.setLayoutX(380); // Penyesuaian posisi X
         buttonBox.setLayoutY(400); // Penyesuaian posisi Y
 
-        // Tambahkan semua elemen ke root
+        // Add all elements to root
         root.getChildren().addAll(labelTitle, labelHello, labelEmail, textFieldEmail, labelPassword, passwordField, labelStatus, imageViewSkillup, buttonBox);
 
-        /* ==> INSTANCE LAYOUT END <== */
-
-        /* ==> BUTTON ACTION START <== */
+        // Button action start
         buttonLogin.setOnAction(e -> {
             String email = textFieldEmail.getText();
             String password = passwordField.getText();
@@ -74,7 +72,7 @@ public class LoginSceneAdmin {
                 labelStatus.setText("Email dan password harus diisi!");
                 return;
             }
-            
+
             Admin admin = AdminController.login(email, password);
             if (admin != null) {
                 HomeAdminScene homeAdminScene = new HomeAdminScene(stage);
@@ -91,13 +89,11 @@ public class LoginSceneAdmin {
         });
 
         buttonRegister.setOnAction(e -> {
-            // Buat instance RegisterScene dengan memasukkan stage yang sama
             RegisterSceneAdmin registerSceneAdmin = new RegisterSceneAdmin(stage);
-            
-            // Panggil metode show() untuk menampilkan RegisterScene
             registerSceneAdmin.show();
         });
-        /* ==> BUTTON ACTION END <== */
+
+        // Button action end
 
         Scene scene = new Scene(root, 740, 480);
         scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm());

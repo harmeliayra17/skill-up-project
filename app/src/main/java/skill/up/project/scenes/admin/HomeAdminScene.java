@@ -1,6 +1,5 @@
 package skill.up.project.scenes.admin;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,13 +8,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -23,16 +19,10 @@ import javafx.stage.Stage;
 import skill.up.project.controllers.AdminController;
 import skill.up.project.controllers.WebinarController;
 import skill.up.project.models.Admin;
-import skill.up.project.models.Article;
 import skill.up.project.models.Webinar;
 import skill.up.project.utils.UIUtil;
-import skill.up.project.*;
 
-import java.awt.Desktop;
 import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 public class HomeAdminScene {
@@ -50,19 +40,21 @@ public class HomeAdminScene {
         rectangleHome.getStyleClass().add("rounded-rectangle");
         root.getChildren().add(rectangleHome);
 
-        // Top bar
         Label labelTitleHome = UIUtil.createLabel("WEBINAR DAN PELATIHAN", 28, 18);
-        labelTitleHome.getStyleClass().add("label-title-home");
+        labelTitleHome.getStyleClass().add("label-title-admin");
 
         Label labelTitleName = UIUtil.createLabel("SkillUp", 664, 18);
-        labelTitleName.getStyleClass().add("label-title-home");
+        labelTitleName.getStyleClass().add("label-title-admin");
 
         ImageView imageViewSmallLogo = UIUtil.createImageView("/images/logoRadius.png", 21, 21, 638, 18);
         imageViewSmallLogo.getStyleClass().add("image-skillup");
 
-        // Rectangles and other elements
+        Button buttonAdd = UIUtil.createButtonWithImage("/images/Add.png", 561, 67, 134, 40);
+        buttonAdd.setOnAction(e -> {
+            AddWebinar addWebinar = new AddWebinar(stage);
+            addWebinar.show(id);
+        });
 
-        Button buttonAdd = UIUtil.createButtonWithImage("/images/Add.png", 561, 67,134, 40);
 
         Label labelAddEvent = UIUtil.createLabel("Event yang telah ditambahkan", 131, 77);
         labelAddEvent.getStyleClass().add("label-add");
@@ -79,15 +71,14 @@ public class HomeAdminScene {
         buttonProfile.setOnAction(e -> {
             int adminId = id;
             Admin adminProfile = AdminController.getAdminById(adminId);
-            if (adminProfile!= null) {
-                // ProfileAdminScene profileScene = new ProfileAdminScene(stage);
-                // profileScene.show(adminId);
+            if (adminProfile != null) {
+                ProfileAdminScene profileScene = new ProfileAdminScene(stage);
+                profileScene.show(adminId);
             } else {
                 // Handle jika tidak dapat menemukan pengguna
             }
         });
 
-        // Articles section
         List<Webinar> webinarsData = WebinarController.getAllWebinar();
 
         GridPane gridPaneWebinars = new GridPane();
@@ -100,14 +91,12 @@ public class HomeAdminScene {
             imageViewWebinar.setFitHeight(200);
             imageViewWebinar.setFitWidth(166);
 
-            // Mendapatkan path gambar dan mengatur gambarnya jika tersedia
-            if (webinar.getImagePath()!= null &&!webinar.getImagePath().isEmpty()) {
+            if (webinar.getImagePath() != null && !webinar.getImagePath().isEmpty()) {
                 File fileImage = new File(webinar.getImagePath());
                 if (fileImage.exists()) {
                     Image imageWebinar = new Image(fileImage.toURI().toString());
                     imageViewWebinar.setImage(imageWebinar);
 
-                    // Apply clipping with rounded corners
                     Rectangle clip = new Rectangle(166, 200);
                     clip.setArcWidth(35);
                     clip.setArcHeight(35);
@@ -130,25 +119,23 @@ public class HomeAdminScene {
             vBoxWebinar.setPrefWidth(170);
             vBoxWebinar.setPrefHeight(300);
 
-            // Menambahkan event handler untuk membuka link saat gambar diklik
             vBoxWebinar.setOnMouseClicked(event -> {
-                DetailWebinarScene detailWebinarScene = new DetailWebinarScene(stage, webinar);
+                UpdateWebinar detailWebinarScene = new UpdateWebinar(stage, webinar);
                 detailWebinarScene.show(id);
             });
-            gridPaneWebinars.add(vBoxWebinar, column, 0); // Semua artikel berada di baris 0
+            gridPaneWebinars.add(vBoxWebinar, column, 0);
             column++;
         }
 
         ScrollPane scrollPane = new ScrollPane(gridPaneWebinars);
         scrollPane.setFitToWidth(true);
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS); // Mengizinkan pengguliran horizontal
-        scrollPane.setStyle("-fx-background-color: #FFFFFF;"); // Menetapkan warna latar belakang scroll pane menjadi putih
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollPane.setStyle("-fx-background-color: #FFFFFF;");
         scrollPane.setLayoutX(132);
         scrollPane.setLayoutY(125);
         scrollPane.setPrefHeight(335);
-        scrollPane.setPrefWidth(568); // Set the width of the ScrollPane to match the Scene width
+        scrollPane.setPrefWidth(568);
 
-        // Add all elements to the root pane
         root.getChildren().addAll(labelTitleHome, labelAddEvent, imageViewSmallLogo, labelTitleName, buttonHomeList, buttonArticle, buttonProfile, buttonAdd, scrollPane);
 
         Scene scene = new Scene(root, 740, 480);

@@ -28,7 +28,7 @@ public class LoginScene {
         Label labelTitle = UIUtil.createLabel("Login", 497, 38);
         labelTitle.getStyleClass().add("label-title-login");
 
-        Label labelHello = UIUtil.createLabel("Sign in to your account", 465, 93);
+        Label labelHello = UIUtil.createLabel("Masuk ke akun Anda", 475, 93);
         labelHello.getStyleClass().add("label-hello");
 
         Label labelEmail = UIUtil.createLabel("Email", 390, 129);

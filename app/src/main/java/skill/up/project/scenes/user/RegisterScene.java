@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import skill.up.project.controllers.UserController;
+import skill.up.project.controllers.AdminController;
 import skill.up.project.utils.UIUtil;
 
 public class RegisterScene {
@@ -27,13 +27,13 @@ public class RegisterScene {
         Label labelTitle = UIUtil.createLabel("Register", 129, 37);
         labelTitle.getStyleClass().add("label-title-register");
 
-        Label labelHello = UIUtil.createLabel("Fill your detail account", 120, 93);
+        Label labelHello = UIUtil.createLabel("Masukkan Detail Akun Anda", 105, 93);
         labelHello.getStyleClass().add("label-hello");
 
-        Label labelFullName = UIUtil.createLabel("Full Name", 54, 136);
+        Label labelFullName = UIUtil.createLabel("Nama Lengkap", 54, 136);
         labelFullName.getStyleClass().add("label-fullName");
 
-        TextField textFieldFullName = UIUtil.createTextField("Masukkan full name", 38, 157);
+        TextField textFieldFullName = UIUtil.createTextField("Masukkan nama lengkap", 38, 157);
         textFieldFullName.getStyleClass().add("text-field-register");
 
         Label labelEmail = UIUtil.createLabel("Email", 54, 210);
@@ -54,6 +54,12 @@ public class RegisterScene {
         Label labelStatus = UIUtil.createLabel("", 102, 368);
         labelStatus.getStyleClass().add("label-status");
 
+        Button buttonBack = UIUtil.createButtonWithImage("/images/Sign_out2.png", 20, 17, 35, 35);
+        buttonBack.setOnAction(e -> {
+            LoginScene loginScene = new LoginScene(stage);
+            loginScene.show();
+        });
+
         Image imageSkillup = new Image(getClass().getResourceAsStream("/images/register_photos.png"));
         ImageView imageViewSkillup = new ImageView(imageSkillup);
         imageViewSkillup.getStyleClass().add("image-skillup");
@@ -62,7 +68,7 @@ public class RegisterScene {
         imageViewSkillup.setLayoutX(388);
         imageViewSkillup.setLayoutY(37);
 
-        root.getChildren().addAll(labelTitle, labelHello, labelFullName, textFieldFullName, labelEmail, textFieldEmail, labelPassword, passwordField, buttonRegister, labelStatus, imageViewSkillup);
+        root.getChildren().addAll(labelTitle, labelHello, labelFullName, textFieldFullName, labelEmail, textFieldEmail, buttonBack, labelPassword, passwordField, buttonRegister, labelStatus, imageViewSkillup);
 
         /* ==> INSTANCE LAYOUT END <== */
 
@@ -77,13 +83,15 @@ public class RegisterScene {
                 return;
             }
             
-            boolean isRegistered = UserController.register(fullName, email, password);
-            
-            if (isRegistered) {
-                labelStatus.setText("Registrasi berhasil!");
-                new LoginScene(stage).show();
+            if (AdminController.isUserExists(email)) {
+                labelStatus.setText("Email sudah terdaftar, silahkan login!");
             } else {
-                labelStatus.setText("Registrasi gagal! Coba lagi.");
+                boolean registered = AdminController.register(fullName, email, password);
+                if (registered) {
+                    labelStatus.setText("Registrasi berhasil!");
+                } else {
+                    labelStatus.setText("Registrasi gagal, coba lagi!");
+                }
             }
         });
         /* ==> BUTTON ACTION END <== */

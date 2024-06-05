@@ -161,48 +161,48 @@ public class UserController extends DbConfig {
         return false;
     }
 
-    //update registered webinar
-    // public static boolean updateUserRegisteredWebinar(int id, String registeredWebinar) {
-    //     String querySelect = "SELECT registered_webinar FROM users WHERE id=?";
-    //     String queryUpdate = "UPDATE users SET registered_webinar = ? WHERE id=?";
-    //     try {
-    //         getConnection();
+    // update registered webinar
+    public static boolean updateUserRegisteredWebinar(int id, String registeredWebinar) {
+        String querySelect = "SELECT registered_webinar FROM users WHERE id=?";
+        String queryUpdate = "UPDATE users SET registered_webinar = ? WHERE id=?";
+        try {
+            getConnection();
             
-    //         // Fetch the current registered_webinar value
-    //         preparedStatement = connection.prepareStatement(querySelect);
-    //         preparedStatement.setInt(1, id);
-    //         resultSet = preparedStatement.executeQuery();
+            // Fetch the current registered_webinar value
+            preparedStatement = connection.prepareStatement(querySelect);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
             
-    //         String currentWebinars = "";
-    //         if (resultSet.next()) {
-    //             currentWebinars = resultSet.getString("registered_webinar");
-    //         }
+            String currentWebinars = "";
+            if (resultSet.next()) {
+                currentWebinars = resultSet.getString("registered_webinar");
+            }
             
-    //         // Append the new webinar
-    //         if (currentWebinars == null || currentWebinars.isEmpty()) {
-    //             currentWebinars = registeredWebinar;
-    //         } else {
-    //             currentWebinars += ", " + registeredWebinar;
-    //         }
+            // Append the new webinar
+            if (currentWebinars == null || currentWebinars.isEmpty()) {
+                currentWebinars = registeredWebinar;
+            } else {
+                currentWebinars += ", " + registeredWebinar;
+            }
 
-    //         // Update the database
-    //         preparedStatement = connection.prepareStatement(queryUpdate);
-    //         preparedStatement.setString(1, currentWebinars);
-    //         preparedStatement.setInt(2, id);
-    //         int affectedRows = preparedStatement.executeUpdate();
+            // Update the database
+            preparedStatement = connection.prepareStatement(queryUpdate);
+            preparedStatement.setString(1, currentWebinars);
+            preparedStatement.setInt(2, id);
+            int affectedRows = preparedStatement.executeUpdate();
             
-    //         return affectedRows > 0;
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //     } finally {
-    //         try {
-    //             if (resultSet != null) resultSet.close();
-    //             if (preparedStatement != null) preparedStatement.close();
-    //             if (connection != null) connection.close();
-    //         } catch (Exception e) {
-    //             e.printStackTrace();
-    //         }
-    //     }
-    //     return false;
-    // }
+            return affectedRows > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
 }

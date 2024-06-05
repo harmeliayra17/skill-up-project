@@ -7,11 +7,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import skill.up.project.controllers.UserController;
+import skill.up.project.controllers.WebinarController;
 import skill.up.project.models.Webinar;
 import skill.up.project.utils.UIUtil;
 import java.io.File;
@@ -20,14 +21,13 @@ import java.net.URI;
 
 public class DetailWebinarScene {
     private Stage stage;
-    private Webinar webinar;
 
-    public DetailWebinarScene(Stage stage, Webinar webinar) {
+    public DetailWebinarScene(Stage stage) {
         this.stage = stage;
-        this.webinar = webinar;
     }
 
-    public void show(int id) {
+    public void show(int userId, int webinarId) {
+        Webinar webinar = WebinarController.getWebinarById(webinarId);
         Pane root = new Pane();
         root.getStyleClass().add("root2");
 
@@ -53,7 +53,7 @@ public class DetailWebinarScene {
         Button buttonBack = UIUtil.createButtonWithImage("/images/Singn_out.png", 10, 5, 35, 35);
         buttonBack.setOnAction(e -> {
             WebinarScene webinarScene = new WebinarScene(stage);
-            webinarScene.show(id);
+            webinarScene.show(userId);
         });
 
         //TODO button profile, tambahkan atau tidak?
@@ -98,6 +98,7 @@ public class DetailWebinarScene {
 
         // Add button action here
         buttonJoin.setOnAction(e -> {
+            boolean isSuccessfull = UserController.updateUserRegisteredWebinar(userId, webinar.getName());
             try {
                 Desktop.getDesktop().browse(new URI(webinar.getLink()));
             } catch (Exception ex) {

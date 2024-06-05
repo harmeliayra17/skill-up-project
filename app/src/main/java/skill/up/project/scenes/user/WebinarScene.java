@@ -119,8 +119,8 @@ public class WebinarScene {
 
             // Menambahkan event handler untuk menampilkan detail webinar saat HBox di klik
             hBoxWebinar.setOnMouseClicked(event -> {
-                DetailWebinarScene detailWebinarScene = new DetailWebinarScene(stage, webinar);
-                detailWebinarScene.show(id);
+                DetailWebinarScene detailWebinarScene = new DetailWebinarScene(stage);
+                detailWebinarScene.show(id, webinar.getId());
             });
         }
 

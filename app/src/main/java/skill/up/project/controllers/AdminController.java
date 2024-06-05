@@ -5,7 +5,6 @@ import skill.up.project.models.Admin;
 import skill.up.project.models.Webinar;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdminController extends DbConfig {
@@ -48,13 +47,6 @@ public class AdminController extends DbConfig {
             return rowsInserted > 0;
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (preparedStatement!= null) preparedStatement.close();
-                if (connection!= null) connection.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
         return false;
     }
@@ -114,10 +106,11 @@ public class AdminController extends DbConfig {
             getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, email);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                int count = resultSet.getInt("count");
-                return count > 0;
+            try (ResultSet adminResultSet = preparedStatement.executeQuery()) {
+                if (adminResultSet.next()) {
+                    int count = adminResultSet.getInt("count");
+                    return count > 0;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

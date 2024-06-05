@@ -30,9 +30,7 @@ import java.io.File;
 import java.awt.Desktop;
 import java.net.URI;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
 public class HomeTest {
     private Stage stage;

@@ -56,8 +56,8 @@ public class AddWebinar {
 
         Button buttonBack = UIUtil.createButtonWithImage("/images/Singn_out.png", 10, 5, 35, 35);
         buttonBack.setOnAction(e -> {
-            ArticleAdminScene articleScene = new ArticleAdminScene(stage);
-            articleScene.show(id);
+            HomeAdminScene homeAdminScene = new HomeAdminScene(stage);
+            homeAdminScene.show(id);
         });
 
         ImageView addImages = UIUtil.createImageView("/images/AddPhoto.png", 269, 335, 41, 116);
@@ -65,16 +65,16 @@ public class AddWebinar {
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
             File selectedFile = fileChooser.showOpenDialog(stage);
-
+        
             if (selectedFile != null) {
-                String imagePath = selectedFile.toURI().toString();
+                String imagePath = selectedFile.getAbsolutePath(); // Menggunakan absolute path
                 webinar.setImagePath(imagePath);
-
-                Image image = new Image(imagePath);
+        
+                Image image = new Image(selectedFile.toURI().toString());
                 addImages.setImage(image);
                 addImages.setFitWidth(269);
                 addImages.setFitHeight(315);
-
+        
                 Rectangle clip = new Rectangle(269, 300);
                 clip.setArcWidth(20);
                 clip.setArcHeight(20);
@@ -97,31 +97,33 @@ public class AddWebinar {
         scrollPane.setPadding(new Insets(2));
         scrollPane.getStyleClass().add("scroll-pane-desc");
 
-        Button buttonUpdate = UIUtil.createButton("Submit", 464, 404);
-        buttonUpdate.getStyleClass().add("button-register-desc");
+        Button buttonAdd = UIUtil.createButton("Submit", 456, 402);
+        buttonAdd.getStyleClass().add("button-register-desc");
 
-        buttonUpdate.setOnAction(e -> {
+        buttonAdd.setOnAction(e -> {
             try {
-                String updatedName = textFieldWebinarName.getText();
-                String updatedDescription = textAreaWebinarDesc.getText();
-                String updatedLink = textFieldLink.getText();
+                String newWebinarName = textFieldWebinarName.getText();
+                String newDescription = textAreaWebinarDesc.getText();
+                String newWebinarLink = textFieldLink.getText();
+                String newimage = webinar.getImagePath();
 
-                webinar.setName(updatedName);
-                webinar.setDescription(updatedDescription);
-                webinar.setLink(updatedLink);
+                webinar.setName(newWebinarName);
+                webinar.setDescription(newDescription);
+                webinar.setLink(newWebinarLink);
+                webinar.setImagePath(newimage);
 
-                if (WebinarController.updateWebinar(webinar.getId(), updatedName, webinar.getImagePath(), updatedLink, updatedDescription)) {
+                if (WebinarController.addWebinar(newWebinarName, newimage, newWebinarLink,  newDescription)) {
                     HomeAdminScene homeAdminScene = new HomeAdminScene(stage);
                     homeAdminScene.show(id);
                 } else {
-                    System.out.println("Failed to update webinar in the database.");
+                    System.out.println("Failed to add article to the database.");
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         });
 
-        root.getChildren().addAll(imageViewSmallLogo, labelTitleName, buttonBack, labelTitle, textFieldLink, textFieldWebinarName, addImages, scrollPane, buttonUpdate);
+        root.getChildren().addAll(imageViewSmallLogo, labelTitleName, buttonBack, labelTitle, textFieldLink, textFieldWebinarName, addImages, scrollPane, buttonAdd);
 
         Scene scene = new Scene(root, 740, 480);
         scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm());

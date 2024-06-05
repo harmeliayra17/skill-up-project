@@ -76,7 +76,7 @@ public class WebinarController extends DbConfig{
 
     //update
     public static boolean updateWebinar(int id, String name, String imagePath, String link, String description) {
-        query = "UPDATE webinars SET name=?, image_path=?, link=?, description=?, WHERE id=?";
+        query = "UPDATE webinars SET name=?, image_path=?, link=?, description=? WHERE id=?";
         try {
             getConnection();
             preparedStatement = connection.prepareStatement(query);
@@ -87,7 +87,6 @@ public class WebinarController extends DbConfig{
             preparedStatement.setInt(5, id);
             int rowsUpdated = preparedStatement.executeUpdate();
             return rowsUpdated > 0;
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -110,7 +109,7 @@ public class WebinarController extends DbConfig{
     }
 
     public static void addWebinarForAdmin(int adminId, int webinarId) {
-        String sql = "INSERT INTO user_webinars(admin_id, webinar_id) VALUES(?, ?)";
+        String sql = "INSERT INTO webinars (admin_id, webinar_id) VALUES(?, ?)";
         try {
             DbConfig.getConnection();
             DbConfig.preparedStatement = DbConfig.connection.prepareStatement(sql);

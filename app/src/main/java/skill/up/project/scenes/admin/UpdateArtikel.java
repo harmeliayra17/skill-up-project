@@ -1,6 +1,5 @@
 package skill.up.project.scenes.admin;
 
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -61,8 +60,8 @@ public class UpdateArtikel {
         buttonDelete.setOnAction(e -> {
             try {
                 if (ArticleController.deleteArticle(article.getId())) {
-                    HomeAdminScene homeAdminScene = new HomeAdminScene(stage);
-                    homeAdminScene.show(id);
+                    ArticleAdminScene articleAdminScene = new ArticleAdminScene(stage);
+                    articleAdminScene.show(id);
                 } else {
                     System.out.println("Failed to delete article from the database.");
                 }
@@ -129,8 +128,8 @@ public class UpdateArtikel {
                 article.setLink(updatedLink);
 
                 if (ArticleController.updateArticle(article.getId(), updatedName, article.getImagePath(), updatedLink)) {
-                    HomeAdminScene homeAdminScene = new HomeAdminScene(stage);
-                    homeAdminScene.show(id);
+                    ArticleAdminScene articleAdminScene = new ArticleAdminScene(stage);
+                    articleAdminScene.show(id);
                 } else {
                     System.out.println("Failed to update article in the database.");
                 }

@@ -16,9 +16,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import skill.up.project.controllers.AdminController;
 import skill.up.project.controllers.ArticleController;
-import skill.up.project.models.Admin;
 import skill.up.project.models.Article;
 import skill.up.project.utils.UIUtil;
 

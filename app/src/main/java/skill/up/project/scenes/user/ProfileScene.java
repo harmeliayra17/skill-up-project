@@ -1,6 +1,5 @@
 package skill.up.project.scenes.user;
 
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,7 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import skill.up.project.controllers.AdminController;
 import skill.up.project.controllers.UserController;
 import skill.up.project.models.User;
 import skill.up.project.scenes.LandingScene;
@@ -40,8 +38,7 @@ public class ProfileScene {
         ImageView imageViewSmallLogo = UIUtil.createImageView("/images/logoRadius.png", 21, 21, 638, 18);
         imageViewSmallLogo.getStyleClass().add("image-skillup");
 
-        Button buttonHome = UIUtil.createButtonWithImage("/images/Home_fill.png", 15, 45, 50, 50);
-        //TODO (selesai) saya tambahkan setOnactionnya
+        Button buttonHome = UIUtil.createButtonWithImage("/images/Home_fill2.png", 15, 45, 50, 50);
         buttonHome.setOnAction(e -> {
             HomeTest homeTest = new HomeTest(stage);
             homeTest.show(id);
@@ -52,7 +49,7 @@ public class ProfileScene {
             WebinarScene webinarScene = new WebinarScene(stage);
             webinarScene.show(id);
         });
-        Button buttonProfile = UIUtil.createButtonWithImage("/images/User_fill.png", 18, 405, 45, 45);
+        Button buttonProfile = UIUtil.createButtonWithImage("/images/User_fill3.png", 18, 405, 45, 45);
 
         // Mendapatkan data pengguna berdasarkan ID
         User user = UserController.getUserById(id);
@@ -95,7 +92,6 @@ public class ProfileScene {
         TextField textFieldBorder = UIUtil.createTextField(user.getRegisteredWebinar(), 508, 213);
         textFieldBorder.getStyleClass().add("text-field-border");
 
-        //TODO ganti  menjadi Logout.png
         Button buttonLogout = UIUtil.createButtonWithImage("images/Logout2.jpg", 568, 412, 120, 40);
         buttonLogout.setOnAction(e -> {
             LandingScene landingScene = new LandingScene(stage);

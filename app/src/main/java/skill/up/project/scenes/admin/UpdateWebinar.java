@@ -54,6 +54,18 @@ public class UpdateWebinar {
         textFieldLink.getStyleClass().add("text-field-update");
 
         Button buttonDelete = UIUtil.createButtonWithImage("/images/Delete.png", 573, 58, 120, 40);
+        buttonDelete.setOnAction(e -> {
+            try {
+                if (WebinarController.deleteWebinar(webinar.getId())) {
+                    HomeAdminScene homeAdminScene = new HomeAdminScene(stage);
+                    homeAdminScene.show(id);
+                } else {
+                    System.out.println("Failed to delete article from the database.");
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
 
         Button buttonBack = UIUtil.createButtonWithImage("/images/Singn_out.png", 10, 5, 35, 35);
         buttonBack.setOnAction(e -> {
@@ -94,7 +106,7 @@ public class UpdateWebinar {
                 imageViewDesc.setImage(newImage);
                 webinar.setImagePath(selectedFile.getAbsolutePath());
 
-                Rectangle clip = new Rectangle(269, 335);
+                Rectangle clip = new Rectangle(269, 300);
                 clip.setArcWidth(20);
                 clip.setArcHeight(20);
                 imageViewDesc.setClip(clip);
@@ -123,11 +135,12 @@ public class UpdateWebinar {
             try {
                 String updatedName = textFieldWebinarName.getText();
                 String updatedDescription = textAreaWebinarDesc.getText();
+                String updatedLink = textFieldLink.getText();
 
                 webinar.setName(updatedName);
                 webinar.setDescription(updatedDescription);
 
-                if (WebinarController.updateWebinar(webinar.getId(), updatedName, webinar.getImagePath(), webinar.getLink(), updatedDescription)) {
+                if (WebinarController.updateWebinar(webinar.getId(), updatedName, webinar.getImagePath(), updatedLink, updatedDescription)) {
                     HomeAdminScene homeAdminScene = new HomeAdminScene(stage);
                     homeAdminScene.show(id);
                 } else {

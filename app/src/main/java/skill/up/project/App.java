@@ -2,12 +2,9 @@ package skill.up.project;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import skill.up.project.scenes.LandingScene;
-import skill.up.project.scenes.admin.AddArtikel;
-import skill.up.project.scenes.user.LoginScene;
 import skill.up.project.utils.SplashScreen;
 
 

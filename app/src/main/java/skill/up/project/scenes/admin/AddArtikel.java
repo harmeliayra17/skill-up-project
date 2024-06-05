@@ -1,11 +1,8 @@
 package skill.up.project.scenes.admin;
 
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,9 +12,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import skill.up.project.controllers.ArticleController;
-import skill.up.project.controllers.WebinarController;
 import skill.up.project.models.Article;
-import skill.up.project.models.Webinar;
 import skill.up.project.utils.UIUtil;
 
 import java.io.File;
@@ -58,8 +53,8 @@ public class AddArtikel {
 
         Button buttonBack = UIUtil.createButtonWithImage("/images/Singn_out.png", 10, 5, 35, 35);
         buttonBack.setOnAction(e -> {
-            HomeAdminScene webinarScene = new HomeAdminScene(stage);
-            webinarScene.show(id);
+            ArticleAdminScene articleAdminScene = new ArticleAdminScene(stage);
+            articleAdminScene.show(id);
         });
 
         ImageView addImages = UIUtil.createImageView("/images/AddPhoto.png", 269, 315, 41, 134);
@@ -67,46 +62,46 @@ public class AddArtikel {
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
             File selectedFile = fileChooser.showOpenDialog(stage);
-
+        
             if (selectedFile != null) {
-                String imagePath = selectedFile.toURI().toString();
+                String imagePath = selectedFile.getAbsolutePath(); // Menggunakan absolute path
                 article.setImagePath(imagePath);
-
-                Image image = new Image(imagePath);
+        
+                Image image = new Image(selectedFile.toURI().toString());
                 addImages.setImage(image);
                 addImages.setFitWidth(269);
                 addImages.setFitHeight(315);
-
+        
                 Rectangle clip = new Rectangle(269, 300);
                 clip.setArcWidth(20);
                 clip.setArcHeight(20);
                 addImages.setClip(clip);
             }
         });
+        
+        Button buttonAdd = UIUtil.createButton("Submit", 456, 220);
+        buttonAdd.getStyleClass().add("button-register-desc");
 
-        Button buttonUpdate = UIUtil.createButton("Submit", 456, 220);
-        buttonUpdate.getStyleClass().add("button-register-desc");
-
-        buttonUpdate.setOnAction(e -> {
+        buttonAdd.setOnAction(e -> {
             try {
-                String updatedName = textFieldArtikelTitle.getText();
-                String updatedLink = textFieldLink.getText();
+                String newArticleName = textFieldArtikelTitle.getText();
+                String newArticleLink = textFieldLink.getText();
 
-                article.setTitle(updatedName);
-                article.setLink(updatedLink);
+                article.setTitle(newArticleName);
+                article.setLink(newArticleLink);
 
-                if (ArticleController.updateArticle(article.getId(), updatedName, article.getImagePath(), updatedLink)) {
-                    HomeAdminScene homeAdminScene = new HomeAdminScene(stage);
-                    homeAdminScene.show(id);
+                if (ArticleController.addArticle(newArticleName, article.getImagePath(), newArticleLink)) {
+                    ArticleAdminScene articleAdminScene = new ArticleAdminScene(stage);
+                    articleAdminScene.show(id);
                 } else {
-                    System.out.println("Failed to update artikel in the database.");
+                    System.out.println("Failed to add article to the database.");
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         });
 
-        root.getChildren().addAll(imageViewSmallLogo, labelTitleName, buttonBack, labelTitle, textFieldLink, textFieldArtikelTitle, addImages, buttonUpdate);
+        root.getChildren().addAll(imageViewSmallLogo, labelTitleName, buttonBack, labelTitle, textFieldLink, textFieldArtikelTitle, addImages, buttonAdd);
 
         Scene scene = new Scene(root, 740, 480);
         scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm());

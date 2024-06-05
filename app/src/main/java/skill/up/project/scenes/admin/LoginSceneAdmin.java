@@ -28,7 +28,7 @@ public class LoginSceneAdmin {
         Label labelTitle = UIUtil.createLabel("Login", 497, 38);
         labelTitle.getStyleClass().add("label-title-login");
 
-        Label labelHello = UIUtil.createLabel("Sign in to your account", 465, 93);
+        Label labelHello = UIUtil.createLabel("Masuk ke akun Anda", 475, 93);
         labelHello.getStyleClass().add("label-hello");
 
         Label labelEmail = UIUtil.createLabel("Email", 390, 129);
@@ -49,7 +49,7 @@ public class LoginSceneAdmin {
         Button buttonRegister = UIUtil.createButton("Register", 556, 400);
         buttonRegister.getStyleClass().add("button-register");
 
-        Label labelStatus = UIUtil.createLabel("", 452, 353);
+        Label labelStatus = UIUtil.createLabel("", 373, 353);
         labelStatus.getStyleClass().add("label-status");
 
         ImageView imageViewSkillup = UIUtil.createImageView("/images/login_photos.png", 300, 405, 39, 37);
@@ -92,8 +92,6 @@ public class LoginSceneAdmin {
             RegisterSceneAdmin registerSceneAdmin = new RegisterSceneAdmin(stage);
             registerSceneAdmin.show();
         });
-
-        // Button action end
 
         Scene scene = new Scene(root, 740, 480);
         scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm());

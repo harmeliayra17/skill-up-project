@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import skill.up.project.controllers.AdminController;
 import skill.up.project.controllers.UserController;
 import skill.up.project.models.User;
 import skill.up.project.scenes.LandingScene;
@@ -41,7 +42,7 @@ public class ProfileScene {
 
         Button buttonHome = UIUtil.createButtonWithImage("/images/Home_fill.png", 15, 45, 50, 50);
         //TODO (selesai) saya tambahkan setOnactionnya
-        buttonHome.setOnAction( e-> {
+        buttonHome.setOnAction(e -> {
             HomeTest homeTest = new HomeTest(stage);
             homeTest.show(id);
         });
@@ -87,11 +88,9 @@ public class ProfileScene {
         TextField textFieldAge = UIUtil.createTextField(String.valueOf(user.getAge()), 147, 347);
         textFieldAge.getStyleClass().add("text-field-register");
 
-        Label labelMbti = UIUtil.createLabel("MBTI", 568, 140);
+        Label labelMbti = UIUtil.createLabel(user.getMbtiResult(), 508, 100);
         labelMbti.getStyleClass().add("label-mbti");
-
-        TextField textFieldMBTI = UIUtil.createTextField(user.getMbtiResult(), 508, 122);
-        textFieldMBTI.getStyleClass().add("text-field-mbti");
+        labelMbti.getStyleClass().add("text-field-mbti");
 
         TextField textFieldBorder = UIUtil.createTextField(user.getRegisteredWebinar(), 508, 213);
         textFieldBorder.getStyleClass().add("text-field-border");
@@ -103,13 +102,24 @@ public class ProfileScene {
             landingScene.show();
         });
 
-        
-
         Button buttonUpdate = UIUtil.createButton("PERBARUI", 234, 414);
         buttonUpdate.getStyleClass().add("button-profile");
+        buttonUpdate.setOnAction(e -> {
+            String updatedName = textFieldName.getText();
+            String updatedPhoneNumber = textFieldPhoneNumber.getText();
+            int updatedAge = Integer.parseInt(textFieldAge.getText());
+
+            boolean isUpdated = UserController.updateUser(id, updatedName, updatedPhoneNumber, updatedAge);
+
+            if (isUpdated) {
+                System.out.println("Profile updated successfully!");
+            } else {
+                System.out.println("Failed to update profile.");
+            }
+        });
 
         root.getChildren().addAll(labelTitleHome, labelTitleName, textFieldEmail, labelEmail, textFieldName, labelName,
-                textFieldPhoneNumber, labelPhoneNumber, textFieldAge, labelAge, textFieldMBTI, labelMbti, textFieldBorder, buttonUpdate, imageViewSmallLogo,
+                textFieldPhoneNumber, labelPhoneNumber, textFieldAge, labelAge, labelMbti, textFieldBorder, buttonUpdate, imageViewSmallLogo,
                 buttonHome, buttonEvent, buttonLogout, buttonProfile);
         /* ==> INSTANCE LAYOUT END <== */
 

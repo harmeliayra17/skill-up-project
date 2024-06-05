@@ -71,14 +71,8 @@ public class ArticleAdminScene {
 
         Button buttonProfile = UIUtil.createButtonWithImage("/images/User_fill.png", 18, 405, 45, 45);
         buttonProfile.setOnAction(e -> {
-            int adminId = id;
-            Admin adminProfile = AdminController.getAdminById(adminId);
-            if (adminProfile != null) {
-                // ProfileAdminScene profileScene = new ProfileAdminScene(stage);
-                // profileScene.show(adminId);
-            } else {
-                // Handle jika tidak dapat menemukan pengguna
-            }
+            ProfileAdminScene profileScene = new ProfileAdminScene(stage);
+            profileScene.show(id);
         });
 
         // Articles section

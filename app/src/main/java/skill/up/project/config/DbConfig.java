@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DbConfig {
-    private static final String DB_URL = "jdbc:sqlite:src/main/resources/db/db_skillupTest.db";
+    private static final String DB_URL = "jdbc:sqlite:src/main/resources/db/db_skillUpProject.db";
     protected static Connection connection;
     protected static PreparedStatement preparedStatement;
     protected static ResultSet resultSet;

@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import skill.up.project.controllers.AdminController;
+import skill.up.project.controllers.UserController;
 import skill.up.project.utils.UIUtil;
 
 public class RegisterScene {
@@ -51,7 +52,7 @@ public class RegisterScene {
         Button buttonRegister = UIUtil.createButton("Register", 124, 400);
         buttonRegister.getStyleClass().add("button-register");
 
-        Label labelStatus = UIUtil.createLabel("", 102, 368);
+        Label labelStatus = UIUtil.createLabel("", 38, 368);
         labelStatus.getStyleClass().add("label-status");
 
         Button buttonBack = UIUtil.createButtonWithImage("/images/Sign_out2.png", 20, 17, 35, 35);
@@ -83,10 +84,10 @@ public class RegisterScene {
                 return;
             }
             
-            if (AdminController.isUserExists(email)) {
+            if (UserController.isUserExists(email)) {
                 labelStatus.setText("Email sudah terdaftar, silahkan login!");
             } else {
-                boolean registered = AdminController.register(fullName, email, password);
+                boolean registered = UserController.register(fullName, email, password);
                 if (registered) {
                     labelStatus.setText("Registrasi berhasil!");
                 } else {

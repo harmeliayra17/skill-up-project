@@ -74,33 +74,6 @@ public class WebinarController extends DbConfig{
         return webinar;
     }
 
-    // Get webinars by user ID
-    // public static List<Webinar> getWebinarsByAdminId(int adminId) {
-    //     List<Webinar> webinars = new ArrayList<>();
-    //     String query = "SELECT w.id, w.name, w.image_path, w.link, w.description FROM webinars w " +
-    //             "JOIN user_webinars uw ON w.id = uw.webinar_id " +
-    //             "WHERE uw.user_id = ?";
-    //     try {
-    //         getConnection();
-    //         preparedStatement = connection.prepareStatement(query);
-    //         preparedStatement.setInt(1, adminId);
-    //         resultSet = preparedStatement.executeQuery();
-    //         while (resultSet.next()) {
-    //             int id = resultSet.getInt("id");
-    //             String name = resultSet.getString("name");
-    //             String imagePath = resultSet.getString("image_path");
-    //             String link = resultSet.getString("link");
-    //             String description = resultSet.getString("description");
-
-    //             Webinar webinar = new Webinar(id, name, imagePath, link, description);
-    //             webinars.add(webinar);
-    //         }
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //     }
-    //     return webinars;
-    // }
-
     //update
     public static boolean updateWebinar(int id, String name, String imagePath, String link, String description) {
         query = "UPDATE webinars SET name=?, image_path=?, link=?, description=?, WHERE id=?";
@@ -147,29 +120,5 @@ public class WebinarController extends DbConfig{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public static List<Webinar> getWebinarsByAdminId(int adminId) {
-        String sql = "SELECT w.id, w.title, w.description FROM webinars w " +
-                     "JOIN user_webinars uw ON w.id = uw.webinar_id " +
-                     "WHERE uw.admin_id = ?";
-        List<Webinar> webinars = new ArrayList<>();
-
-        try {
-            DbConfig.getConnection();
-            DbConfig.preparedStatement = DbConfig.connection.prepareStatement(sql);
-            DbConfig.preparedStatement.setInt(1, adminId);
-            DbConfig.resultSet = DbConfig.preparedStatement.executeQuery();
-            while (DbConfig.resultSet.next()) {
-                Webinar webinar = new Webinar(adminId, sql, sql, sql, sql);
-                webinar.setId(DbConfig.resultSet.getInt("id"));
-                webinar.setName(DbConfig.resultSet.getString("title"));
-                webinar.setDescription(DbConfig.resultSet.getString("description"));
-                webinars.add(webinar);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return webinars;
     }
 }

@@ -49,7 +49,7 @@ public class LoginScene {
         Button buttonRegister = UIUtil.createButton("Register", 556, 400);
         buttonRegister.getStyleClass().add("button-register");        
 
-        Label labelStatus = UIUtil.createLabel("", 452, 353);
+        Label labelStatus = UIUtil.createLabel("", 373, 353);
         labelStatus.getStyleClass().add("label-status");
 
         ImageView imageViewSkillup = UIUtil.createImageView("/images/login_photos.png", 300, 405, 39, 37);
@@ -92,10 +92,7 @@ public class LoginScene {
         });
 
         buttonRegister.setOnAction(e -> {
-            // Buat instance RegisterScene dengan memasukkan stage yang sama
             RegisterScene registerScene = new RegisterScene(stage);
-            
-            // Panggil metode show() untuk menampilkan RegisterScene
             registerScene.show();
         });
         /* ==> BUTTON ACTION END <== */

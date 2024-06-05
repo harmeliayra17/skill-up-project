@@ -778,6 +778,9 @@
 
 .label-status {
     -fx-font-size: 12px;
+    -fx-pref-width: 332px;
+    -fx-alignment: center;
+
 }
 
 .label-mbti {
@@ -785,8 +788,19 @@
     -fx-font-size: 15px;
     -fx-font-weight: bold;
     -fx-text-fill: #FFFFFF;
-    -fx-font-width: 50px;
-    -fx-font-height: 15px;
+    -fx-alignment: center;
+}
+
+.text-field-mbti {
+    -fx-pref-width: 157px;
+    -fx-pref-height: 64px;
+    -fx-border-color: #7D1935;
+    -fx-background-color: #7D1935;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 0 10px; /* Add padding for better text centering */
+    -fx-alignment: center; /* Center the text */
 }
 
 
@@ -805,16 +819,6 @@
     -fx-pref-width: 302px;
 }
 
-.text-field-mbti {
-    -fx-pref-width: 157px;
-    -fx-pref-height: 64px;
-    -fx-border-color: #7D1935;
-    -fx-background-color:#7D1935;
-    -fx-border-width:2px;
-    -fx-border-radius: 10px;
-    -fx-background-radius: 10px;
-}
-
 .text-field-border {
     -fx-pref-width: 157px;
     -fx-pref-height: 154px;
@@ -825,10 +829,11 @@
     -fx-background-radius: 30px;
 }
 
-.text-field-padmin {
+.text-field-admin {
     -fx-pref-width: 492px;
     -fx-pref-height: 41px;
     -fx-padding: 10px;
+    -fx-font-family: 'Poppins';
     -fx-border-color: #7D1935;
     -fx-border-width: 2px;
     -fx-border-radius: 25px;

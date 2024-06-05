@@ -86,16 +86,15 @@ public class UserController extends DbConfig {
     }
 
     //update user
-    public static boolean updateUser(int id, String name, String email, String phoneNumber, int age) {
-        String query = "UPDATE users SET name=?, email=?, phone_number=?, age=? WHERE id=?";
+    public static boolean updateUser(int id, String name, String phoneNumber, int age) {
+        String query = "UPDATE users SET name=?, phone_number=?, age=? WHERE id=?";
         try {
             getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1,name);
-            preparedStatement.setString(2, email);
-            preparedStatement.setString(3, phoneNumber);
-            preparedStatement.setInt(4, age);
-            preparedStatement.setInt(5, id);
+            preparedStatement.setString(2, phoneNumber);
+            preparedStatement.setInt(3, age);
+            preparedStatement.setInt(4, id);
 
             int affectedRows = preparedStatement.executeUpdate();
             return affectedRows > 0;

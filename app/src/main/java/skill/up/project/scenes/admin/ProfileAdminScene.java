@@ -10,9 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import skill.up.project.controllers.AdminController;
-import skill.up.project.controllers.UserController;
 import skill.up.project.models.Admin;
-import skill.up.project.models.User;
 import skill.up.project.scenes.LandingScene;
 import skill.up.project.utils.UIUtil;
 
@@ -41,18 +39,18 @@ public class ProfileAdminScene {
         ImageView imageViewSmallLogo = UIUtil.createImageView("/images/logoRadius.png", 21, 21, 638, 18);
         imageViewSmallLogo.getStyleClass().add("image-skillup");
 
-        Button buttonHome = UIUtil.createButtonWithImage("/images/Home_fill2.png", 15, 45, 50, 50);
-        //TODO (selesai) saya tambahkan setonactionnya
-        buttonHome.setOnAction(e-> {
+        Button buttonWebinars = UIUtil.createButtonWithImage("/images/Book_fill.png", 15, 45, 50, 50);
+        buttonWebinars.setOnAction(e -> {
             HomeAdminScene homeAdminScene = new HomeAdminScene(stage);
             homeAdminScene.show(id);
         });
 
-        Button buttonEvent = UIUtil.createButtonWithImage("/images/Book_fill.png", 18, 140, 45, 45);
-        buttonEvent.setOnAction(e -> {
-            // WebinarScene webinarScene = new WebinarScene(stage);
-            // webinarScene.show(id);
+        Button buttonArticle = UIUtil.createButtonWithImage("/images/Article1.png", 18, 140, 45, 45);
+        buttonArticle.setOnAction(e -> {
+            ArticleAdminScene articleScene = new ArticleAdminScene(stage);
+            articleScene.show(id);
         });
+
         Button buttonProfile = UIUtil.createButtonWithImage("/images/Profile_Red.png", 18, 405, 45, 45);
 
         // Mendapatkan data pengguna berdasarkan ID
@@ -69,48 +67,51 @@ public class ProfileAdminScene {
 
         TextField textFieldEmail = UIUtil.createTextField(admin.getEmail(), 164, 103);
         textFieldEmail.setEditable(false);
-        textFieldEmail.getStyleClass().add("text-field-padmin");
+        textFieldEmail.getStyleClass().add("text-field-admin");
 
         Label labelName = UIUtil.createLabel("Nama", 164, 157);
         labelName.getStyleClass().add("label-email");
 
         TextField textFieldName = UIUtil.createTextField(admin.getName(), 164, 179);
-        textFieldName.getStyleClass().add("text-field-padmin");
+        textFieldName.getStyleClass().add("text-field-admin");
 
         Label labelPhoneNumber = UIUtil.createLabel("Nomor Telepon", 164, 233); 
         labelPhoneNumber.getStyleClass().add("label-email");
 
         TextField textFieldPhoneNumber = UIUtil.createTextField(admin.getPhoneNumber(), 164, 255);
-        textFieldPhoneNumber.getStyleClass().add("text-field-padmin");
+        textFieldPhoneNumber.getStyleClass().add("text-field-admin");
 
         Label labelCompany = UIUtil.createLabel("Company", 164, 309);
         labelCompany.getStyleClass().add("label-email");
 
         TextField textFieldCompany = UIUtil.createTextField(admin.getCompany(), 164, 331);
-        textFieldCompany.getStyleClass().add("text-field-padmin");
+        textFieldCompany.getStyleClass().add("text-field-admin");
 
-
-        // TODO uncomment
-        // Button buttonLogout = UIUtil.createButtonWithImage("images/Logout.png", 568, 412, 120, 40);
-        // buttonLogout.setOnAction(e -> {
-        //     LandingScene landingScene = new LandingScene(stage);
-        //     landingScene.show();
-        // });
-
-        //TODO hapus
         Button buttonLogout = UIUtil.createButtonWithImage("images/Logout2.jpg", 568, 412, 120, 40);
         buttonLogout.setOnAction(e -> {
             LandingScene landingScene = new LandingScene(stage);
             landingScene.show();
         });
-        //--------------
 
         Button buttonUpdate = UIUtil.createButton("PERBARUI", 333, 404);
         buttonUpdate.getStyleClass().add("button-profile");
+        buttonUpdate.setOnAction(e -> {
+            String updatedName = textFieldName.getText();
+            String updatedPhoneNumber = textFieldPhoneNumber.getText();
+            String updatedCompany = textFieldCompany.getText();
+
+            boolean isUpdated = AdminController.updateAdmin(id, updatedName, updatedPhoneNumber, updatedCompany);
+
+            if (isUpdated) {
+                System.out.println("Profile updated successfully!");
+            } else {
+                System.out.println("Failed to update profile.");
+            }
+        });
 
         root.getChildren().addAll(labelTitleHome, labelTitleName, textFieldEmail, labelEmail, textFieldName, labelName,
                 textFieldPhoneNumber, labelPhoneNumber, labelCompany, textFieldCompany, buttonUpdate, imageViewSmallLogo,
-                buttonHome, buttonEvent, buttonLogout, buttonProfile);
+                buttonWebinars, buttonArticle, buttonLogout, buttonProfile);
         /* ==> INSTANCE LAYOUT END <== */
 
         Scene scene = new Scene(root, 740, 480);

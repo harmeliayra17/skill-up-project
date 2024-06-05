@@ -56,15 +56,19 @@ public class WebinarScene {
         rectangleHome.getStyleClass().add("rounded-rectangle");
 
         Button buttonHome = UIUtil.createButtonWithImage("/images/Home_fill2.png", 15, 45, 50, 50);
-
-        Button buttonEvent = UIUtil.createButtonWithImage("/images/Book_fill2.png", 18, 140, 45, 45);
-
-        Button buttonProfile = UIUtil.createButtonWithImage("/images/User_fill.png", 18, 405, 45, 45);
-
         buttonHome.setOnAction(e -> {
             HomeTest homeScene = new HomeTest(stage);
             homeScene.show(id);
         });
+
+        Button buttonEvent = UIUtil.createButtonWithImage("/images/Book_fill2.png", 18, 140, 45, 45);
+
+        Button buttonProfile = UIUtil.createButtonWithImage("/images/User_fill.png", 18, 405, 45, 45);
+        buttonProfile.setOnAction(e -> {
+            ProfileScene profileScene = new ProfileScene(stage);
+            profileScene.show(id);
+        });
+
 
         // Webinars section
         List<Webinar> webinarsData = WebinarController.getAllWebinar();

@@ -63,7 +63,26 @@ public class AddArtikel {
         });
 
         ImageView addImages = UIUtil.createImageView("/images/AddPhoto.png", 269, 315, 41, 134);
+        addImages.setOnMouseClicked(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
+            File selectedFile = fileChooser.showOpenDialog(stage);
 
+            if (selectedFile != null) {
+                String imagePath = selectedFile.toURI().toString();
+                article.setImagePath(imagePath);
+
+                Image image = new Image(imagePath);
+                addImages.setImage(image);
+                addImages.setFitWidth(269);
+                addImages.setFitHeight(315);
+
+                Rectangle clip = new Rectangle(269, 300);
+                clip.setArcWidth(20);
+                clip.setArcHeight(20);
+                addImages.setClip(clip);
+            }
+        });
 
         Button buttonUpdate = UIUtil.createButton("Submit", 456, 220);
         buttonUpdate.getStyleClass().add("button-register-desc");

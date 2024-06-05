@@ -56,11 +56,31 @@ public class AddWebinar {
 
         Button buttonBack = UIUtil.createButtonWithImage("/images/Singn_out.png", 10, 5, 35, 35);
         buttonBack.setOnAction(e -> {
-            HomeAdminScene webinarScene = new HomeAdminScene(stage);
-            webinarScene.show(id);
+            ArticleAdminScene articleScene = new ArticleAdminScene(stage);
+            articleScene.show(id);
         });
 
         ImageView addImages = UIUtil.createImageView("/images/AddPhoto.png", 269, 335, 41, 116);
+        addImages.setOnMouseClicked(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
+            File selectedFile = fileChooser.showOpenDialog(stage);
+
+            if (selectedFile != null) {
+                String imagePath = selectedFile.toURI().toString();
+                webinar.setImagePath(imagePath);
+
+                Image image = new Image(imagePath);
+                addImages.setImage(image);
+                addImages.setFitWidth(269);
+                addImages.setFitHeight(315);
+
+                Rectangle clip = new Rectangle(269, 300);
+                clip.setArcWidth(20);
+                clip.setArcHeight(20);
+                addImages.setClip(clip);
+            }
+        });
 
         TextArea textAreaWebinarDesc = new TextArea("Masukkan deskripsi webinar");
         textAreaWebinarDesc.setPrefWidth(368);

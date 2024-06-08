@@ -8,8 +8,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import skill.up.project.controllers.AdminController;
-import skill.up.project.models.Admin;
+import skill.up.project.controllers.UserController;
+import skill.up.project.models.User;
+// import skill.up.project.controllers.AdminController;
+// import skill.up.project.models.Admin;
 import skill.up.project.scenes.LandingScene;
 import skill.up.project.utils.UIUtil;
 
@@ -53,7 +55,7 @@ public class ProfileAdminScene {
         Button buttonProfile = UIUtil.createButtonWithImage("/images/Profile_Red.png", 18, 405, 45, 45);
 
         // Mendapatkan data pengguna berdasarkan ID
-        Admin admin = AdminController.getAdminById(id);
+        User admin = UserController.getUserById(id);
         
         if (admin == null) {
             System.out.println("User tidak ditemukan");
@@ -99,7 +101,7 @@ public class ProfileAdminScene {
             String updatedPhoneNumber = textFieldPhoneNumber.getText();
             String updatedCompany = textFieldCompany.getText();
 
-            boolean isUpdated = AdminController.updateAdmin(id, updatedName, updatedPhoneNumber, updatedCompany);
+            boolean isUpdated = UserController.updateAdmin(id, updatedName, updatedPhoneNumber, updatedCompany);
 
             if (isUpdated) {
                 System.out.println("Profile updated successfully!");

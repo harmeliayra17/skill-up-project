@@ -22,7 +22,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import skill.up.project.models.mbtiPackage.ExtraVsIntro;
 import skill.up.project.models.mbtiPackage.MBTI;
-import skill.up.project.scenes.HomeScene;
 import skill.up.project.scenes.user.HomeTest;
 
 public class MbtiTest1Scene {
@@ -163,8 +162,16 @@ public class MbtiTest1Scene {
         Button buttonnext = new Button("Next");
         buttonnext.getStyleClass().add("backNextButton-style");
         buttonnext.setOnAction(e -> {
-            handleAnswer();
-            if (answers.size() == 9) {
+            boolean allAnswered = true;
+            for (String answer : answers) {
+                if (answer == null) {
+                    allAnswered = false;
+                    break;
+                }
+            }
+        
+            if (allAnswered && answers.size() == questions.length) {
+                handleAnswer();
                 MbtiTest2Scene mbtiTest2Scene = new MbtiTest2Scene(stage);
                 mbtiTest2Scene.setResultBefore(resultEvsI);
                 mbtiTest2Scene.show(id);
@@ -191,11 +198,10 @@ public class MbtiTest1Scene {
     }
 
     public void addAnswer(String answer, int questionIndex) {
-        if (answers.size() <= questionIndex) {
-            answers.add(answer);
-        } else {
-            answers.set(questionIndex, answer);
+        while (answers.size() <= questionIndex) {
+            answers.add(null);
         }
+        answers.set(questionIndex, answer);
     }
 
     public void handleAnswer() {

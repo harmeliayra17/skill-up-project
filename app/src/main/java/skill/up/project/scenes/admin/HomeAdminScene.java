@@ -16,9 +16,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import skill.up.project.controllers.AdminController;
+import skill.up.project.controllers.UserController;
+// import skill.up.project.controllers.AdminController;
 import skill.up.project.controllers.WebinarController;
-import skill.up.project.models.Admin;
+// import skill.up.project.models.Admin;
+import skill.up.project.models.User;
 import skill.up.project.models.Webinar;
 import skill.up.project.utils.UIUtil;
 
@@ -69,11 +71,10 @@ public class HomeAdminScene {
 
         Button buttonProfile = UIUtil.createButtonWithImage("/images/User_fill.png", 18, 405, 45, 45);
         buttonProfile.setOnAction(e -> {
-            int adminId = id;
-            Admin adminProfile = AdminController.getAdminById(adminId);
+            User adminProfile = UserController.getUserById(id);
             if (adminProfile != null) {
                 ProfileAdminScene profileScene = new ProfileAdminScene(stage);
-                profileScene.show(adminId);
+                profileScene.show(id);
             } else {
                 // Handle jika tidak dapat menemukan pengguna
             }

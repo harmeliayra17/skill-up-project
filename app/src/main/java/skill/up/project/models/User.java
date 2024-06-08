@@ -1,17 +1,18 @@
 package skill.up.project.models;
 
 public class User extends Model{
-    private String name, email, phoneNumber, mbtiResult, registeredWebinar;
+    private String name, email, role, phoneNumber, mbtiResult, registeredWebinar, company;
     private int age;
 
     //untuk login
-    public User(int id) {
+    public User(int id, String role) {
         super(id);
+        this.role = role;
     }
 
     //untuk getUserById()
     public User(int id, String name, String email, String phoneNumber, String mbtiResult,
-            String registeredWebinar, int age) {
+            String registeredWebinar, int age, String company, String role) {
         super(id);
         this.name = name;
         this.email = email;
@@ -19,6 +20,8 @@ public class User extends Model{
         this.mbtiResult = mbtiResult;
         this.registeredWebinar = registeredWebinar;
         this.age = age;
+        this.company = company;
+        this.role = role;
     }
 
     public String getName() {
@@ -69,6 +72,20 @@ public class User extends Model{
         this.age = age;
     }
 
+    public String getRole() {
+        return role;
+    }
 
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
     
 }

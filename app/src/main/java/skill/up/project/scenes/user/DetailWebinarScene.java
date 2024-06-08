@@ -99,10 +99,14 @@ public class DetailWebinarScene {
         // Add button action here
         buttonJoin.setOnAction(e -> {
             boolean isSuccessfull = UserController.updateUserRegisteredWebinar(userId, webinar.getName());
-            try {
-                Desktop.getDesktop().browse(new URI(webinar.getLink()));
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            if (isSuccessfull) {
+                try {
+                    Desktop.getDesktop().browse(new URI(webinar.getLink()));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                System.out.println("Failed to update user Registered Webinar");
             }
         });
 

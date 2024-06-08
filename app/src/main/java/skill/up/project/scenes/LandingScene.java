@@ -7,7 +7,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import skill.up.project.scenes.admin.LoginSceneAdmin;
 import skill.up.project.scenes.user.LoginScene;
 import skill.up.project.utils.UIUtil;
 
@@ -41,21 +40,22 @@ public class LandingScene {
         labelHi.getStyleClass().add("label-hi");
 
         // Buttons
-        Button buttonUser = UIUtil.createButton("Login as User", 437, 184);
+        Button buttonUser = UIUtil.createButton("Login", 437, 184);
         buttonUser.getStyleClass().add("button-user");
         buttonUser.setOnAction(e -> {
             LoginScene loginScene = new LoginScene(stage);
             loginScene.show();
         });
 
-        Button buttonAdmin = UIUtil.createButton("Login as Admin", 437, 238);
-        buttonAdmin.getStyleClass().add("button-admin");
-        buttonAdmin.setOnAction(e -> {
-            LoginSceneAdmin loginSceneAdmin = new LoginSceneAdmin(stage);
-            loginSceneAdmin.show();
-        });
+        // Button buttonAdmin = UIUtil.createButton("Login as Admin", 437, 238);
+        // buttonAdmin.getStyleClass().add("button-admin");
+        // buttonAdmin.setOnAction(e -> {
+        //     LoginSceneAdmin loginSceneAdmin = new LoginSceneAdmin(stage);
+        //     loginSceneAdmin.show();
+        // });
 
-        root.getChildren().addAll(labelHalo, labelHi, buttonUser, buttonAdmin);
+        // root.getChildren().addAll(labelHalo, labelHi, buttonUser, buttonAdmin);
+        root.getChildren().addAll(labelHalo, labelHi, buttonUser);
 
         Scene scene = new Scene(root, 740, 480);
         scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm());

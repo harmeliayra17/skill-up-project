@@ -11,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import skill.up.project.controllers.UserController;
 import skill.up.project.models.User;
+import skill.up.project.scenes.admin.HomeAdminScene;
 import skill.up.project.utils.UIUtil;
 
 public class LoginScene {
@@ -78,8 +79,15 @@ public class LoginScene {
             User user = UserController.login(email, password);
             if (user != null) {
                 int id = user.getId();
-                HomeTest homeTest = new HomeTest(stage);
-                homeTest.show(id);
+                String role = user.getRole();
+                if (role.equals("admin")) {
+                     HomeAdminScene homeAdminScene = new HomeAdminScene(stage);
+                     homeAdminScene.show(id);
+                } else {
+                    HomeTest homeTest = new HomeTest(stage);
+                    homeTest.show(id);
+                }
+
             } else {
                 if (UserController.isUserExists(email)) {
                     // Jika email terdaftar tapi password salah

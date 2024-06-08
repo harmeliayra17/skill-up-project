@@ -150,17 +150,18 @@ public class MbtiTest2Scene {
         labelInfo.setAlignment(Pos.CENTER);
         labelInfo.getStyleClass().add("labelInfo-style");
 
-        // Button buttonBack = new Button("Back");
-        // buttonBack.getStyleClass().add("backNextButton-style");
-        // buttonBack.setOnAction(e -> {
-        //     // TODO: setOnAction untuk kembali ke Home
-        // });
-
         Button buttonnext = new Button("Next");
         buttonnext.getStyleClass().add("backNextButton-style");
         buttonnext.setOnAction(e -> {
-            handleAnswer();
-            if (answers.size() == 9) {
+            boolean allAnswered = true;
+            for (String answer : answers) {
+                if (answer == null) {
+                    allAnswered = false;
+                    break;
+                }
+            }
+            if (allAnswered && answers.size() == questions.length) {
+                handleAnswer();
                 MbtiTest3Scene mbtiTest3Scene = new MbtiTest3Scene(stage);
                 resultBefore += resultSvsN;
                 mbtiTest3Scene.setResultBefore(resultBefore);
@@ -188,11 +189,10 @@ public class MbtiTest2Scene {
     }
 
     public void addAnswer(String answer, int questionIndex) {
-        if (answers.size() <= questionIndex) {
-            answers.add(answer);
-        } else {
-            answers.set(questionIndex, answer);
+        while (answers.size() <= questionIndex) {
+            answers.add(null);
         }
+        answers.set(questionIndex, answer);
     }
 
     public void handleAnswer() {

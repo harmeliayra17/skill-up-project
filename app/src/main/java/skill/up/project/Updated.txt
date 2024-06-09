@@ -1,0 +1,35 @@
+1. Controller 
+1) Menghapus admin Controller.
+2) Menambahkan method updateAdmin pada UserController.
+
+2. Database
+1) Menghapus table admin pada database.
+2) Menambahkan column role dan company pada table users.
+
+3. Models
+Untuk models, class admin dihapus, lalu pada model user ditambahkan attribute role dan company.
+
+4. Scene
+Menghapus RegisterSceneAdmin dan LoginSceneAdmin, karena admin sudah tidak bisa register. Otomatis menghapus 
+button Login as Admin di LandingScene. Jadi di loginscene dibuatkan if else statement yang mengecek role akun 
+yang login kalau rolenya admin maka diarahkan ke home scene admin. 
+
+4. Mbtitestscene
+Karena ada bug pada mbtitestscene jadi kodenya sedikit direvisi yang dimana user jadi bisa mengisi jawaban 
+dalam urutan teracak.
+
+5. Profile
+1) Memperbaharui untuk kolom hasil MBTI, jika belum melakukan tes akan muncul tulisan "MBTI" lalu terganti 
+    jika sudah.
+2) Memperbaharui kolom registered event agar lebih rapi tampilannya.
+3) Memperbaiki agar saat update jika hanya 1 isian (textfield) saja yang diubah isian lain tidak menjadi kosong.
+
+6. Pop Up
+Membuat pop up jika ingin keluar dari profile (user dan admin) dan menghapus webinar atau artikel, untuk memastikan
+pengguna tidak salah keluar/menghapus karena salah klik.
+
+7. Scroll Pane pada article admin maksimal 3 box ke kanan.
+
+
+
+

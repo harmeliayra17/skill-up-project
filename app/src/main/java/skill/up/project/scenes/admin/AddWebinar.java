@@ -97,6 +97,9 @@ public class AddWebinar {
         scrollPane.setPadding(new Insets(2));
         scrollPane.getStyleClass().add("scroll-pane-desc");
 
+        Label labelStatus = UIUtil.createLabel("", 350, 435);
+        labelStatus.getStyleClass().add("label-status");
+
         Button buttonAdd = UIUtil.createButton("Submit", 456, 402);
         buttonAdd.getStyleClass().add("button-register-desc");
 
@@ -106,6 +109,26 @@ public class AddWebinar {
                 String newDescription = textAreaWebinarDesc.getText();
                 String newWebinarLink = textFieldLink.getText();
                 String newimage = webinar.getImagePath();
+
+                if (newWebinarName == null || newWebinarName.trim().isEmpty()) {
+                    labelStatus.setText("Nama tidak boleh kosong!");
+                    return;
+                }
+        
+                if (newDescription == null || newDescription.trim().isEmpty()) {
+                    labelStatus.setText("Deskripsi tidak boleh kosong!");;
+                    return;
+                }
+        
+                if (newWebinarLink == null || newWebinarLink.trim().isEmpty()) {
+                    labelStatus.setText("Link tidak boleh kosong!");;
+                    return;
+                }
+        
+                if (newimage == null || newimage.trim().isEmpty()) {
+                    labelStatus.setText("Gambar tidak boleh kosong!");;
+                    return;
+                }
 
                 webinar.setName(newWebinarName);
                 webinar.setDescription(newDescription);
@@ -123,7 +146,8 @@ public class AddWebinar {
             }
         });
 
-        root.getChildren().addAll(imageViewSmallLogo, labelTitleName, buttonBack, labelTitle, textFieldLink, textFieldWebinarName, addImages, scrollPane, buttonAdd);
+
+        root.getChildren().addAll(imageViewSmallLogo, labelTitleName, buttonBack, labelTitle, textFieldLink, textFieldWebinarName, addImages, scrollPane, buttonAdd, labelStatus);
 
         Scene scene = new Scene(root, 740, 480);
         scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm());

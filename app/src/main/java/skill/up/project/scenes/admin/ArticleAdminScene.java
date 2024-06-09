@@ -83,7 +83,7 @@ public class ArticleAdminScene {
 
         int column = 0;
         int row = 0;
-        int maxColumns = 7; // Maximum number of articles to display horizontally
+        int maxColumns = 3; // Maximum number of articles to display horizontally
         for (Article article : articlesData) {
             if (column >= maxColumns) {
                 // Start a new row
@@ -93,7 +93,7 @@ public class ArticleAdminScene {
 
             ImageView imageViewArticle = new ImageView();
             imageViewArticle.setFitHeight(100);
-            imageViewArticle.setFitWidth(140);
+            imageViewArticle.setFitWidth(160);
 
             // Mendapatkan path gambar dan mengatur gambarnya jika tersedia
             if (article.getImagePath() != null && !article.getImagePath().isEmpty()) {
@@ -103,7 +103,7 @@ public class ArticleAdminScene {
                     imageViewArticle.setImage(imageArticle);
 
                     // Apply clipping with rounded corners
-                    Rectangle clip = new Rectangle(140, 100);
+                    Rectangle clip = new Rectangle(160, 100);
                     clip.setArcWidth(38);
                     clip.setArcHeight(38);
                     imageViewArticle.setClip(clip);
@@ -118,11 +118,11 @@ public class ArticleAdminScene {
             Label labelLink = new Label(article.getLink());
             VBox vBoxArtikel = new VBox(labelTitleArticle, labelLink);
             vBoxArtikel.setPadding(new Insets(15, 15, 15, 15));
-            vBoxArtikel.setSpacing(5);
+            vBoxArtikel.setSpacing(10);
 
             VBox vBoxArticle = new VBox(vBoxImageArticle, vBoxArtikel);
             vBoxArticle.setStyle("-fx-border-color: #7D1935; -fx-border-width: 2px; -fx-border-radius: 20px;");
-            vBoxArticle.setPrefWidth(180);
+            vBoxArticle.setPrefWidth(160);
 
             // Menambahkan event handler untuk membuka link saat gambar diklik
             vBoxArticle.setOnMouseClicked(event -> {

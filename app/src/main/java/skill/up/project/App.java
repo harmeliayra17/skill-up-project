@@ -33,8 +33,7 @@ public class App extends Application {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-            // Update UI on JavaFX Application Thread
+            
             Platform.runLater(() -> {
                 LandingScene mainScene = new LandingScene(stage);
                 mainScene.show();

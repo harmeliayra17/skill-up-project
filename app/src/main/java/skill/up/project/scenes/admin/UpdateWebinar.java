@@ -16,6 +16,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import skill.up.project.controllers.WebinarController;
 import skill.up.project.models.Webinar;
+import skill.up.project.scenes.popUp.PopUpDeleteEvent;
 import skill.up.project.utils.UIUtil;
 
 import java.io.File;
@@ -28,7 +29,13 @@ public class UpdateWebinar {
         this.stage = stage;
         this.webinar = webinar;
     }
+
     public void show(int id) {
+        if (webinar == null) {
+            System.out.println("Webinar is null. Cannot show update page.");
+            return;
+        }
+
         Pane root = new Pane();
         root.getStyleClass().add("root3");
 
@@ -55,16 +62,8 @@ public class UpdateWebinar {
 
         Button buttonDelete = UIUtil.createButtonWithImage("/images/Delete.png", 573, 58, 120, 40);
         buttonDelete.setOnAction(e -> {
-            try {
-                if (WebinarController.deleteWebinar(webinar.getId())) {
-                    HomeAdminScene homeAdminScene = new HomeAdminScene(stage);
-                    homeAdminScene.show(id);
-                } else {
-                    System.out.println("Failed to delete article from the database.");
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            PopUpDeleteEvent popUpDelete = new PopUpDeleteEvent(stage, webinar);
+            popUpDelete.show(id);
         });
 
         Button buttonBack = UIUtil.createButtonWithImage("/images/Singn_out.png", 10, 5, 35, 35);
@@ -137,8 +136,23 @@ public class UpdateWebinar {
                 String updatedDescription = textAreaWebinarDesc.getText();
                 String updatedLink = textFieldLink.getText();
 
-                webinar.setName(updatedName);
-                webinar.setDescription(updatedDescription);
+                if (updatedName != null && !updatedName.trim().isEmpty()) {
+                    webinar.setName(updatedName);
+                } else {
+                    updatedName = webinar.getName(); 
+                }
+        
+                if (updatedDescription != null && !updatedDescription.trim().isEmpty()) {
+                    webinar.setDescription(updatedDescription);
+                } else {
+                    updatedDescription = webinar.getDescription(); 
+                }
+        
+                if (updatedLink != null && !updatedLink.trim().isEmpty()) {
+                    webinar.setLink(updatedLink);
+                } else {
+                    updatedLink = webinar.getLink(); 
+                }
 
                 if (WebinarController.updateWebinar(webinar.getId(), updatedName, webinar.getImagePath(), updatedLink, updatedDescription)) {
                     HomeAdminScene homeAdminScene = new HomeAdminScene(stage);

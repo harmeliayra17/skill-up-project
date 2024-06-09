@@ -78,6 +78,9 @@ public class AddArtikel {
                 addImages.setClip(clip);
             }
         });
+
+        Label labelStatus = UIUtil.createLabel("", 350, 260);
+        labelStatus.getStyleClass().add("label-status");
         
         Button buttonAdd = UIUtil.createButton("Submit", 456, 220);
         buttonAdd.getStyleClass().add("button-register-desc");
@@ -87,8 +90,15 @@ public class AddArtikel {
                 String newArticleName = textFieldArtikelTitle.getText();
                 String newArticleLink = textFieldLink.getText();
 
-                article.setTitle(newArticleName);
-                article.setLink(newArticleLink);
+                if (newArticleName == null || newArticleName.trim().isEmpty()) {
+                    labelStatus.setText("Nama tidak boleh kosong!");
+                    return;
+                }
+        
+                if (newArticleLink == null || newArticleLink.trim().isEmpty()) {
+                    labelStatus.setText("Link tidak boleh kosong!");;
+                    return;
+                }
 
                 if (ArticleController.addArticle(newArticleName, article.getImagePath(), newArticleLink)) {
                     ArticleAdminScene articleAdminScene = new ArticleAdminScene(stage);
@@ -101,7 +111,8 @@ public class AddArtikel {
             }
         });
 
-        root.getChildren().addAll(imageViewSmallLogo, labelTitleName, buttonBack, labelTitle, textFieldLink, textFieldArtikelTitle, addImages, buttonAdd);
+
+        root.getChildren().addAll(imageViewSmallLogo, labelTitleName, buttonBack, labelTitle, textFieldLink, textFieldArtikelTitle, addImages, buttonAdd, labelStatus);
 
         Scene scene = new Scene(root, 740, 480);
         scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm());

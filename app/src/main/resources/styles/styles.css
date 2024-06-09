@@ -250,6 +250,20 @@
     -fx-font-family: 'Poppins';
 }
 
+.title-text-popup {
+    -fx-text-fill:#FFFFFF;
+    -fx-font-weight: 900;
+    -fx-font-size: 22px;
+    -fx-font-family: 'Poppins';
+}
+
+.title-text-delete {
+    -fx-text-fill:#7D1935;
+    -fx-font-weight: 900;
+    -fx-font-size: 22px;
+    -fx-font-family: 'Poppins';
+}
+
 .label-hi {
     -fx-text-fill:#FFFFFF;
     -fx-font-weight: 800;
@@ -258,33 +272,33 @@
 }
 
 /* Buttons Landing */
-.button-user, .button-admin {
+.button-ya, .button-batal {
     -fx-font-size: 14px;
     -fx-border-width: 2px;
     -fx-border-radius: 30px;
     -fx-background-radius: 30px;
-    -fx-pref-width: 199px;
+    -fx-pref-width: 91px;
     -fx-font-weight: bold;
-    -fx-pref-height: 42px;
+    -fx-pref-height: 27px;
     -fx-border-color: #ffffff;
 }
 
-.button-user {
-    -fx-background-color: #FAB512;
+.button-ya {
+    -fx-background-color: #21854F;
     -fx-text-fill: white;
 }
 
-.button-user:hover {
+.button-ya:hover {
     -fx-background-color: #FFFFFF;
-    -fx-text-fill: #FAB512;
+    -fx-text-fill: #21854F;
 }
 
-.button-admin {
+.button-batal {
     -fx-background-color: #7D1935;
     -fx-text-fill: white;
 }
 
-.button-admin:hover {
+.button-batal:hover {
     -fx-background-color: #FFFFFF;
     -fx-text-fill: #7D1935;
 }
@@ -822,8 +836,6 @@
 }
 
 .text-field-border {
-    -fx-pref-width: 157px;
-    -fx-pref-height: 154px;
     -fx-padding: 10px;
     -fx-border-color: #7D1935;
     -fx-border-width: 2px;

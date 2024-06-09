@@ -13,6 +13,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import skill.up.project.controllers.ArticleController;
 import skill.up.project.models.Article;
+import skill.up.project.scenes.popUp.PopUpDeleteArticle;
+import skill.up.project.scenes.popUp.PopUpDeleteEvent;
 import skill.up.project.utils.UIUtil;
 
 import java.awt.Desktop;
@@ -56,18 +58,9 @@ public class UpdateArtikel {
         textFieldLink.getStyleClass().add("text-field-update");
 
         Button buttonDelete = UIUtil.createButtonWithImage("/images/Delete.png", 573, 58, 120, 40);
-
         buttonDelete.setOnAction(e -> {
-            try {
-                if (ArticleController.deleteArticle(article.getId())) {
-                    ArticleAdminScene articleAdminScene = new ArticleAdminScene(stage);
-                    articleAdminScene.show(id);
-                } else {
-                    System.out.println("Failed to delete article from the database.");
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            PopUpDeleteArticle popUpDelete = new PopUpDeleteArticle(stage, article);
+            popUpDelete.show(id);
         });
 
         Button buttonBack = UIUtil.createButtonWithImage("/images/Singn_out.png", 10, 5, 35, 35);
@@ -124,8 +117,17 @@ public class UpdateArtikel {
                 String updatedName = textFieldArticleName.getText();
                 String updatedLink = textFieldLink.getText();
 
-                article.setTitle(updatedName);
-                article.setLink(updatedLink);
+                if (updatedName != null && !updatedName.trim().isEmpty()) {
+                    article.setTitle(updatedName);
+                } else {
+                    updatedName = article.getTitle(); 
+                }
+        
+                if (updatedLink != null && !updatedLink.trim().isEmpty()) {
+                    article.setLink(updatedLink);;
+                } else {
+                    updatedLink = article.getLink();; 
+                }
 
                 if (ArticleController.updateArticle(article.getId(), updatedName, article.getImagePath(), updatedLink)) {
                     ArticleAdminScene articleAdminScene = new ArticleAdminScene(stage);

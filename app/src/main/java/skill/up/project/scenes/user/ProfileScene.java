@@ -3,6 +3,7 @@ package skill.up.project.scenes.user;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -10,7 +11,7 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import skill.up.project.controllers.UserController;
 import skill.up.project.models.User;
-import skill.up.project.scenes.LandingScene;
+import skill.up.project.scenes.popUp.PopUpOut;
 import skill.up.project.utils.UIUtil;
 
 public class ProfileScene {
@@ -85,37 +86,92 @@ public class ProfileScene {
         TextField textFieldAge = UIUtil.createTextField(String.valueOf(user.getAge()), 147, 347);
         textFieldAge.getStyleClass().add("text-field-register");
 
-        Label labelMbti = UIUtil.createLabel(user.getMbtiResult(), 508, 100);
+        String mbtiResult = user.getMbtiResult();
+        String displayText = (mbtiResult == null || mbtiResult.isEmpty()) ? "MBTI" : mbtiResult;
+
+        Label labelMbti = UIUtil.createLabel(displayText, 508, 100);
         labelMbti.getStyleClass().add("label-mbti");
         labelMbti.getStyleClass().add("text-field-mbti");
 
-        TextField textFieldBorder = UIUtil.createTextField(user.getRegisteredWebinar(), 508, 213);
-        textFieldBorder.getStyleClass().add("text-field-border");
+        Label labelregistered = UIUtil.createLabel("Riwayat Pendaftaran", 508, 180);
+        labelregistered.getStyleClass().add("label-email");
+        
+        String registeredWebinarWithNewLines = "";
+        String registeredWebinar = user.getRegisteredWebinar();
+        if (registeredWebinar != null) {
+            registeredWebinarWithNewLines = registeredWebinar.replace(", ", "\n");
+        }
+        
+        TextArea textAreaBorder = new TextArea(registeredWebinarWithNewLines);
+        textAreaBorder.setPrefSize(157, 154);
+        textAreaBorder.getStyleClass().add("text-field-border");
+        textAreaBorder.setEditable(false);
+        textAreaBorder.setLayoutX(508); // Atur posisi horizontal
+        textAreaBorder.setLayoutY(213); // Atur posisi vertikal 
+        
 
         Button buttonLogout = UIUtil.createButtonWithImage("images/Logout2.jpg", 568, 412, 120, 40);
         buttonLogout.setOnAction(e -> {
-            LandingScene landingScene = new LandingScene(stage);
-            landingScene.show();
+            PopUpOut popUpOut = new PopUpOut(stage);
+            popUpOut.show(id);
         });
 
         Button buttonUpdate = UIUtil.createButton("PERBARUI", 234, 414);
         buttonUpdate.getStyleClass().add("button-profile");
         buttonUpdate.setOnAction(e -> {
-            String updatedName = textFieldName.getText();
-            String updatedPhoneNumber = textFieldPhoneNumber.getText();
-            int updatedAge = Integer.parseInt(textFieldAge.getText());
-
-            boolean isUpdated = UserController.updateUser(id, updatedName, updatedPhoneNumber, updatedAge);
-
+            // Ambil nilai input dari text field
+            String updatedName = textFieldName.getText().trim();
+            String updatedPhoneNumber = textFieldPhoneNumber.getText().trim();
+            String updatedAgeText = textFieldAge.getText().trim();
+        
+            // Ambil nilai saat ini dari user (pastikan user adalah objek yang ada dan memiliki nilai yang benar)
+            String currentName = user.getName();
+            String currentPhoneNumber = user.getPhoneNumber();
+            int currentAge = user.getAge();
+        
+            boolean isUpdated = false;
+        
+            // Periksa perubahan nama
+            if (!updatedName.isEmpty() && !updatedName.equals(currentName)) {
+                user.setName(updatedName);
+                isUpdated = true;
+            }
+        
+            // Periksa perubahan nomor telepon
+            if (!updatedPhoneNumber.isEmpty() && !updatedPhoneNumber.equals(currentPhoneNumber)) {
+                user.setPhoneNumber(updatedPhoneNumber);
+                isUpdated = true;
+            }
+        
+            // Periksa perubahan umur
+            if (!updatedAgeText.isEmpty()) {
+                try {
+                    int updatedAge = Integer.parseInt(updatedAgeText);
+                    if (updatedAge != currentAge) {
+                        user.setAge(updatedAge);
+                        isUpdated = true;
+                    }
+                } catch (NumberFormatException ex) {
+                    System.out.println("Invalid age input.");
+                    return;
+                }
+            }
+        
             if (isUpdated) {
-                System.out.println("Profile updated successfully!");
+                boolean updateSuccess = UserController.updateUser(user.getId(), user.getName(), user.getPhoneNumber(), user.getAge());
+                if (updateSuccess) {
+                    System.out.println("Profile updated successfully!");
+                } else {
+                    System.out.println("Failed to update profile.");
+                }
             } else {
-                System.out.println("Failed to update profile.");
+                System.out.println("No changes to update.");
             }
         });
+        
 
         root.getChildren().addAll(labelTitleHome, labelTitleName, textFieldEmail, labelEmail, textFieldName, labelName,
-                textFieldPhoneNumber, labelPhoneNumber, textFieldAge, labelAge, labelMbti, textFieldBorder, buttonUpdate, imageViewSmallLogo,
+                textFieldPhoneNumber, labelPhoneNumber, textFieldAge, labelAge, labelMbti, textAreaBorder, buttonUpdate, imageViewSmallLogo,
                 buttonHome, buttonEvent, buttonLogout, buttonProfile);
         /* ==> INSTANCE LAYOUT END <== */
 

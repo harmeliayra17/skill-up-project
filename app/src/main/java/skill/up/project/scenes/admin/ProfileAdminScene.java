@@ -13,6 +13,7 @@ import skill.up.project.models.User;
 // import skill.up.project.controllers.AdminController;
 // import skill.up.project.models.Admin;
 import skill.up.project.scenes.LandingScene;
+import skill.up.project.scenes.popUp.PopUpOutAdmin;
 import skill.up.project.utils.UIUtil;
 
 public class ProfileAdminScene {
@@ -90,25 +91,50 @@ public class ProfileAdminScene {
 
         Button buttonLogout = UIUtil.createButtonWithImage("images/Logout2.jpg", 568, 412, 120, 40);
         buttonLogout.setOnAction(e -> {
-            LandingScene landingScene = new LandingScene(stage);
-            landingScene.show();
+            PopUpOutAdmin popUpOutAdmin = new PopUpOutAdmin(stage);
+            popUpOutAdmin.show(id);
         });
 
         Button buttonUpdate = UIUtil.createButton("PERBARUI", 333, 404);
         buttonUpdate.getStyleClass().add("button-profile");
         buttonUpdate.setOnAction(e -> {
-            String updatedName = textFieldName.getText();
-            String updatedPhoneNumber = textFieldPhoneNumber.getText();
-            String updatedCompany = textFieldCompany.getText();
-
-            boolean isUpdated = UserController.updateAdmin(id, updatedName, updatedPhoneNumber, updatedCompany);
-
+            String updatedName = textFieldName.getText().trim();
+            String updatedPhoneNumber = textFieldPhoneNumber.getText().trim();
+            String updatedCompany = textFieldCompany.getText().trim();
+        
+            String currentName = admin.getName();
+            String currentPhoneNumber = admin.getPhoneNumber();
+            String currentCompany = admin.getCompany();
+        
+            boolean isUpdated = false;
+        
+            if (!updatedName.isEmpty() && !updatedName.equals(currentName)) {
+                admin.setName(updatedName);
+                isUpdated = true;
+            }
+        
+            if (!updatedPhoneNumber.isEmpty() && !updatedPhoneNumber.equals(currentPhoneNumber)) {
+                admin.setPhoneNumber(updatedPhoneNumber);
+                isUpdated = true;
+            }
+        
+            if (!updatedCompany.isEmpty() && !updatedCompany.equals(currentCompany)) {
+                admin.setCompany(updatedCompany);
+                isUpdated = true;
+            }
+        
             if (isUpdated) {
-                System.out.println("Profile updated successfully!");
+                boolean updateSuccess = UserController.updateAdmin(admin.getId(), admin.getName(), admin.getPhoneNumber(), admin.getCompany());
+                if (updateSuccess) {
+                    System.out.println("Profile updated successfully!");
+                } else {
+                    System.out.println("Failed to update profile.");
+                }
             } else {
-                System.out.println("Failed to update profile.");
+                System.out.println("No changes to update.");
             }
         });
+        
 
         root.getChildren().addAll(labelTitleHome, labelTitleName, textFieldEmail, labelEmail, textFieldName, labelName,
                 textFieldPhoneNumber, labelPhoneNumber, labelCompany, textFieldCompany, buttonUpdate, imageViewSmallLogo,
